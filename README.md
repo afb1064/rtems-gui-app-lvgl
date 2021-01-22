@@ -1,7 +1,7 @@
 # rtems-gui-lvgl
 
 
-![Simple widgets and their animations](https://media.giphy.com/media/qDHrVIuJqofxcZyght/giphy.gif)
+![Simple widgets and their animations](https://media.giphy.com/media/FmkD4FpElJCRvulJMC/giphy.gif)
 
 # Description
 
@@ -12,6 +12,9 @@ You can find further infos in this [blog](https://blog.thelunatic.dev/index.html
 
  1. Development Board: Beaglebone Black
  2. Display: Waveshare 5" 800x480 LCD (H)
+
+## Image
+![Simple widgets and their animations](https://i.hizliresim.com/jjlalB.jpg)
 
 ## Special Thanks
 
