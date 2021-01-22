@@ -13,7 +13,6 @@ You can find further infos in this [blog](https://blog.thelunatic.dev/index.html
  1. Development Board: Beaglebone Black
  2. Display: Waveshare 5" 800x480 LCD (H)
 
-
 ## Special Thanks
 
 My sincere thanks to [Vijay Kumar Banerjee](https://www.thelunatic.dev) for all his support and assistance.
