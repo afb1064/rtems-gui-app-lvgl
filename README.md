@@ -1,4 +1,4 @@
-# rtems-gui-lvgl
+# rtems-gui-app-lvgl
 
 
 ![Simple widgets and their animations](https://media.giphy.com/media/FmkD4FpElJCRvulJMC/giphy.gif)
