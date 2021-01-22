@@ -112,9 +112,9 @@ static void Init(rtems_task_argument arg)
     sc = rtems_task_start(eid, evdev_input_task, 0);
     assert(sc == RTEMS_SUCCESSFUL);
     sc = rtems_bsd_initialize();
-	assert(sc == RTEMS_SUCCESSFUL);
+    assert(sc == RTEMS_SUCCESSFUL);
 
-	lv_init();
+    lv_init();
     hal_init();
     draw(lv_theme_material_init(0 , NULL));
 	
