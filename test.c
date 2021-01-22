@@ -90,7 +90,9 @@ static lv_obj_t * content;
 static lv_obj_t * slider;
 
 
-static void Init(rtems_task_argument arg){
+static void Init(rtems_task_argument arg)
+{
+
 	rtems_status_code sc;
 	int exit_code;
 	(void)arg;
@@ -130,7 +132,9 @@ static void Init(rtems_task_argument arg){
 	exit(0);
 }
 
-static void* tick_thread (void *arg){
+static void* tick_thread (void *arg)
+{
+
     (void)arg;
 
     while(1) {
@@ -140,7 +144,9 @@ static void* tick_thread (void *arg){
     }
 }
 
-static void evdev_input_task(rtems_task_argument arg){
+static void evdev_input_task(rtems_task_argument arg)
+{
+
     rtems_status_code sc;
     size_t size;
     int fd = -1;
@@ -163,7 +169,9 @@ static void evdev_input_task(rtems_task_argument arg){
     rtems_task_delete(RTEMS_SELF);
 }
 
-static void* mem_monitor(lv_task_t * param){
+static void* mem_monitor(lv_task_t * param)
+{
+
     lv_mem_monitor_t mon;
     lv_mem_monitor(&mon);
     printf("used: %6d (%3d %%), frag: %3d %%, biggest free: %6d\n", (int)mon.total_size - mon.free_size,
@@ -172,31 +180,28 @@ static void* mem_monitor(lv_task_t * param){
             (int)mon.free_biggest_size);
 }
 
-static void hal_init(void){
+static void hal_init(void)
+{
 
-	fbdev_init();
+    fbdev_init();
     
-	static lv_color_t buf[LV_HOR_RES_MAX*10];
-	static lv_disp_buf_t disp_buf;
-	lv_disp_buf_init(&disp_buf, buf, NULL, LV_HOR_RES_MAX*10);
+    static lv_color_t buf[LV_HOR_RES_MAX*10];
+    static lv_disp_buf_t disp_buf;
+    lv_disp_buf_init(&disp_buf, buf, NULL, LV_HOR_RES_MAX*10);
 
-	lv_disp_drv_t disp_drv;
-	lv_disp_drv_init(&disp_drv);
-	disp_drv.buffer = &disp_buf;
-	disp_drv.flush_cb = fbdev_flush;
-	lv_disp_drv_register(&disp_drv);
+    lv_disp_drv_t disp_drv;
+    lv_disp_drv_init(&disp_drv);
+    disp_drv.buffer = &disp_buf;
+    disp_drv.flush_cb = fbdev_flush;
+    lv_disp_drv_register(&disp_drv);
 	
     lv_indev_drv_t indev_drv;
-	lv_indev_drv_init(&indev_drv);
-	indev_drv.type = LV_INDEV_TYPE_POINTER;
-	indev_drv.read_cb = evdev_read;
-	lv_indev_drv_register(&indev_drv);
+    lv_indev_drv_init(&indev_drv);
+    indev_drv.type = LV_INDEV_TYPE_POINTER;
+    indev_drv.read_cb = evdev_read;
+    lv_indev_drv_register(&indev_drv);
     lv_indev_t * mouse_indev = lv_indev_drv_register(&indev_drv);
-    /*
-    lv_obj_t * cursor_obj = lv_img_create(lv_scr_act(), NULL);
-    lv_img_set_src(cursor_obj, LV_SYMBOL_PLAY);
-    lv_indev_set_cursor(mouse_indev, cursor_obj);
-       */
+
     LV_IMG_DECLARE(mouse_cursor_icon); /*Declare the image file.*/
     lv_obj_t * cursor_obj = lv_img_create(lv_scr_act(), NULL); /*Create an image object for the cursor */
     lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
@@ -206,12 +211,12 @@ static void hal_init(void){
 
 }
 
-static void topBar(void){
+static void topBar(void)
+{
 
-	header = lv_cont_create(lv_disp_get_scr_act(NULL), NULL);
-	lv_obj_set_width(header, lv_disp_get_hor_res(NULL));
-
-	static lv_style_t style_bg; /*renk*/
+    header = lv_cont_create(lv_disp_get_scr_act(NULL), NULL);
+    lv_obj_set_width(header, lv_disp_get_hor_res(NULL));
+    static lv_style_t style_bg; 
     lv_style_copy(&style_bg, &lv_style_pretty);
     style_bg.body.main_color =  LV_COLOR_GRAY;
     style_bg.body.grad_color =  LV_COLOR_WHITE;
@@ -231,26 +236,27 @@ static void topBar(void){
     lv_obj_set_pos(header, 0, 0);
 
 }
-static void loader(lv_obj_t *scr){
-	
+static void loader(lv_obj_t *scr)
+{
+
     static lv_style_t style;
-	lv_style_copy(&style, &lv_style_plain);
-	style.line.width = 10;                         
-	style.line.color = lv_color_hex3(0x000);
+    lv_style_copy(&style, &lv_style_plain);
+    style.line.width = 10;                         
+    style.line.color = lv_color_hex3(0x000);
+    style.body.border.color = lv_color_hex3(0xBBB); 
+    style.body.border.width = 10;
+    style.body.padding.left = 0;
 
-	style.body.border.color = lv_color_hex3(0xBBB); 
-	style.body.border.width = 10;
-	style.body.padding.left = 0;
-
-
-	lv_obj_t * preload = lv_preload_create(scr, NULL);
-	lv_obj_set_size(preload, 50, 50);
-	lv_obj_align(preload, NULL, LV_ALIGN_OUT_BOTTOM_MID, LV_DPI/2, LV_DPI);
-	lv_preload_set_style(preload, LV_PRELOAD_STYLE_MAIN, &style);
+    lv_obj_t * preload = lv_preload_create(scr, NULL);
+    lv_obj_set_size(preload, 50, 50);
+    lv_obj_align(preload, NULL, LV_ALIGN_OUT_BOTTOM_MID, LV_DPI/2, LV_DPI);
+    lv_preload_set_style(preload, LV_PRELOAD_STYLE_MAIN, &style);
 
 }
 
-static void sideBar(void){
+static void sideBar(void)
+{
+
     lv_coord_t hres = lv_disp_get_hor_res(NULL);
     lv_coord_t vres = lv_disp_get_ver_res(NULL);
 
@@ -286,7 +292,9 @@ static void sideBar(void){
 
 }
 
-static void botBar(void){
+static void botBar(void)
+{
+
     bottomBar = lv_cont_create(lv_disp_get_scr_act(NULL), NULL);
     lv_obj_set_width(bottomBar, lv_disp_get_hor_res(NULL));
 
@@ -345,6 +353,7 @@ static void botBar(void){
 
 static void slider_event(lv_obj_t * obj, lv_event_t event)
 {
+
     if(event == LV_EVENT_VALUE_CHANGED) {
         static char buf[4]; 
         snprintf(buf, 4, "%u", lv_slider_get_value(slider));
@@ -357,7 +366,8 @@ static void slider_event(lv_obj_t * obj, lv_event_t event)
     }
 }
 
-static void page(void){
+static void page(void)
+{
 
     lv_coord_t hres = lv_disp_get_hor_res(NULL);
     lv_coord_t vres = lv_disp_get_ver_res(NULL);
@@ -400,16 +410,19 @@ static void page(void){
     lv_kb_set_ta(kb, ta);
 }
 
-static void draw(lv_theme_t * th){
+static void draw(lv_theme_t * th)
+{
+
     lv_theme_set_current(th);
     lv_obj_t * scr = lv_obj_create(NULL, NULL);
-	lv_disp_load_scr(scr);
+    lv_disp_load_scr(scr);
 
     topBar();
     sideBar();
     botBar();
     page();               
 }
+
 
 /*
  * Configure LibBSD.
