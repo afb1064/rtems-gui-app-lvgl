@@ -102,3 +102,4 @@ const lv_img_dsc_t mouse_cursor_icon = {
     .header.cf = LV_IMG_CF_TRUE_COLOR_ALPHA,
     .data = mouse_cursor_icon_map,
 };
+
